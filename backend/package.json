@@ -1,5 +1,5 @@
 {
-  "name": "node-blue-boilerplate",
+  "name": "isis-passwords",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,9 +13,18 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "@types/node": "^20.11.30",
+    "@types/pg": "^8.20.0",
     "tsup": "^8.0.2",
     "tsx": "^4.7.1",
     "typescript": "^5.4.3"
+  },
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "http-status-codes": "^2.3.0",
+    "pg": "^8.22.0"
   }
 }
