@@ -43,9 +43,10 @@ variaveis:
 
 ## Endpoints
 As endpoints atuais são referentes a login de usuario e CRUD de senha, 
-
-
-
-
-
-`teste`
+|Método|Rota|Descrição|
+|:---|:---|:---|
+|`GET`|`/password`| Lista todas as senhas (senhas ainda criptografadas)|
+|`GET`|`/password/:id`|Filtra senhas pelo id (senhas com descriptografia)|
+|`POST`|`/password/register`|Cadastra novas senhas|
+|`PATCH`|`/password/:id`|Atualiza parcialmente as senhas. Apenas campos enviados no body são alterados|
+|`DELETE`|`/password/:id`|Exclui uma senha pelo ID|
