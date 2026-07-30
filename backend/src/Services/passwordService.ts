@@ -1,9 +1,7 @@
-import chalk from "chalk";
 import * as pr from '../Repositories/passwordRepository';
 import * as crypto from '../utils/crypto';
 import { PasswordModel } from "../Models/passwordModel";
 
-type PsswdPatchFields = Partial<Pick<PasswordModel, 'passwordEncrypted' | 'service' | 'username' | 'fav'>>;
 
 export const getAllPsswdService = async () => {
     const data = await pr.selectAllPsswd();
@@ -30,10 +28,11 @@ export const postPsswdService = async (password:PasswordModel) => {
     return data;
 };
 
-export const patchPsswdService = async (id:number, fields:PsswdPatchFields) => {
-    const data = { ...fields };
-    if(data.passwordEncrypted) data.passwordEncrypted = await crypto.encrypt(data.passwordEncrypted);
-    return await pr.updatePsswd(id, data);
+export const patchPsswdService = async (id:number, password:PasswordModel) => {
+    if(password.passwordEncrypted) password.passwordEncrypted = await crypto.encrypt(password.passwordEncrypted);
+    const data = await pr.updatePsswd(id, password);
+    if(!data) return null
+    return data;
 };
 
 export const deletePsswdService = async (id:number) => {

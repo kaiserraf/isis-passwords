@@ -2,8 +2,6 @@ import chalk from 'chalk';
 import pool from '../config/db'
 import { PasswordModel } from '../Models/passwordModel';
 
-type PsswdPatchFields = Partial<Pick<PasswordModel, 'passwordEncrypted' | 'service' | 'username' | 'fav'>>;
-
 export const selectAllPsswd = async ():Promise<PasswordModel[] | null> => {
     const result = await pool.query<PasswordModel>(`SELECT * FROM passwords ORDER BY id`);
     return result.rows;
@@ -34,18 +32,50 @@ export const insertPsswd = async (password:PasswordModel):Promise<PasswordModel>
     return p;
 };
 
-export const updatePsswd = async (id:number, fields: PsswdPatchFields):Promise<PasswordModel | null> => {
-    const keys = Object.keys(fields) as (keyof PsswdPatchFields)[];
-    if(keys.length === 0) return null;
-    const setClauses = keys.map((key, index) => `${key} = ${index +1}`);
-    const values = keys.map((key) => fields[key]);
-    setClauses.push(`"updatedat" = NOW()`);
+export const updatePsswd = async (id:number, password:Partial<{
+    passwordEncrypted: string,
+    service: string,
+    username: string,
+    updatedAt: Date,
+    fav: boolean
+}>):Promise<PasswordModel | null> => {
+    const field: string[] = [];
+    const value: unknown[] = [];
+    let count = 1;
 
-    const result = await pool.query<PasswordModel>(`
-        UPDATE passwords
-        SET ${setClauses.join(", ")}
-        WHERE id = $${keys.length + 1}
-        RETURNING *`, [...values, id]);
+    if(!password.passwordEncrypted){
+        field.push(`passwordencrypted = $${count++}`);
+        value.push(password.passwordEncrypted);
+    }
+    if(!password.service){
+        field.push(`service = $${count++}`);
+        value.push(password.service);
+    }
+    if(!password.username){
+        field.push(`username = $${count++}`);
+        value.push(password.username);
+    }
+    if(!password.updatedAt){
+        field.push(`updatedat = $${count++}`);
+        value.push(password.updatedAt);
+    }
+    if(!password.fav){
+        field.push(`fav = $${count++}`);
+        value.push(password.fav);
+    }
+    if(field.length === 0) return null;
+    value.push(id);
+    const result = await pool.query<PasswordModel>(
+        `UPDATE passwords SET ${field.join(',')} WHERE id = $${count}
+        RETURNING
+        id,
+        passwordencrypted AS "passwordEncrypted",
+        username,
+        fav,
+        createdat AS "createdAt",
+        updatedat AS "updatedAt"
+    `);
+
     return result.rows[0] ?? null;
 };
 
