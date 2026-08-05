@@ -1,6 +1,7 @@
 # Sprint 01 - Funcionalidades Básicas | BACKEND
 Data Inicial: 25/07/2026 \
-Data Final:
+Data Final: 07/05/2026
+Total: 8 Dias Uteis
 
 ## Introdução
 A primeira sprint foi designada para a criação das funcionalidades básicas do Backend,
@@ -39,10 +40,18 @@ variaveis:
 |DB_PASS| Senha do Banco |
 |DB_PORT| Porta do Banco |
 |DB_NAME| Nome do Banco |
-|ENCRYPTION_KEY| Chave para Criptografia de senhas |
+|ENCRYPTION_KEY| Chave para Criptografia das senhas no banco|
+|JWT_SECRET|Chave para criptografia de senha de usuario|
+
+**Ponto de atenção:** tanto a ENCRYPTION_KEY, quanto o JWT_SECRET, strings de 32 bytes gerado a partir do comando:
+````typescript
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+````
 
 ## Endpoints
-As endpoints atuais são referentes a login de usuario e CRUD de senha, 
+As endpoints atuais são referentes a CRUD de senhas, login e registro de usuarios:
+
+### CRUD de senhas
 |Método|Rota|Descrição|
 |:---|:---|:---|
 |`GET`|`/password`| Lista todas as senhas (senhas ainda criptografadas)|
@@ -50,3 +59,35 @@ As endpoints atuais são referentes a login de usuario e CRUD de senha,
 |`POST`|`/password/register`|Cadastra novas senhas|
 |`PATCH`|`/password/:id`|Atualiza parcialmente as senhas. Apenas campos enviados no body são alterados|
 |`DELETE`|`/password/:id`|Exclui uma senha pelo ID|
+
+### Login de Usuario
+|Método|Rota|Descrição|
+|:---|:---|:---|
+|`POST`|`/login`|Permite usuario já cadastrado acessar todas as funcionalidades|
+|`POST`|`/register`|Registra novos usuarios (rota protegida por authToken)|
+|`POST`|`/refresh`|Chamado quando o acess token está perto de expirar para gerar um novo|
+|`POST`|`/logout`|Permite o usuario logado, sair da conta|
+
+## Packages/Dependences/devDependences
+O sistema atualmente roda com diversas dependencias, sejam elas apenas Dependencias de Desenvolvimento (devDependences), na qual, são pacotes que o projeto precisa apenas enquanto é desenvolvido e compilado, como:
+- @types/bcrypt
+- @types/express
+- @types/jsonwebtoken
+- @types/node
+- @types/pg
+- tsup
+- tsx
+- typescript
+>**Ponto de Atenção:** as dependências com `@types`, são usadas para adicionar tipagem as *Dependencias de Produção*, que são citadas a seguir
+
+mas também há pacotes que são Dependencias de Produção, em que meu projeto precisa para rodar e executar o código do servidor, são eles:
+- **bcrypt:** usado para criptografia das senhas de usuario em hash, que são guardadas no banco de dados, e verificadas com `.compare()`
+- **chalk:** usado para melhorar a interação com o terminal, deixando erros em vermelho, mensagens de sucesso em verde, etc.
+- **dotenv:** usado para poder ter acesso as variáveis ambiente
+- **express:** framework HTTP usado
+- **http-status-codes:** usado para melhorar a leitura do código e dos erros HTTP gerados
+- **jsonwebtoken:** usado para autenticação de usuario
+- **pg:** banco de dados
+
+## Conclusão
+A sprint 01 foi direcionada apenas para criação das funcionalidades básicas de um gerenciador de senhas, porem, sendo programado apenas o **backEnd**, seguindo agora para a sprint 02, onde será criado o **FrontEnd** do sistema, em seguida, serão implementadas mais features, porem, que não tem uma urgencia maior

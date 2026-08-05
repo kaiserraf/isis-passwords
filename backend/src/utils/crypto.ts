@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import bcrypt from 'bcrypt';
 
 const getKey = async () => {
     const keyHex = process.env.ENCRYPTION_KEY;
@@ -6,7 +7,7 @@ const getKey = async () => {
     const key = Buffer.from(keyHex, 'hex');
     if(key.length !== 32) throw new Error('ENCRYPTION_KEY precisa ter 32 bytes');
     return key;
-}
+};
 
 export const encrypt = async (data:string):Promise<string> => {
     const key = await getKey();
@@ -20,7 +21,7 @@ export const encrypt = async (data:string):Promise<string> => {
     const concatString = `${iv.toString('base64')}:${authTag.toString("base64")}:${encrypted.toString("base64")}`;
 
     return concatString;
-}
+};
 
 export const decrypt = async (payload:string):Promise<string> => {
     const key = await getKey();
@@ -40,4 +41,15 @@ export const decrypt = async (payload:string):Promise<string> => {
     const decrypted = Buffer.concat([decipher.update(encrypted), decipher.final()]);
 
     return decrypted.toString("utf8");
+};
+
+export const hashPassword = async (password:string):Promise<string> => {
+    const randomSalt = crypto.randomInt(10, 12);
+    const hash = await bcrypt.hash(password, randomSalt);
+    return hash;
+};
+
+export const comparePassword = async (password:string, hash:string):Promise<boolean> => {
+    const compare = bcrypt.compare(password, hash);
+    return compare;
 }

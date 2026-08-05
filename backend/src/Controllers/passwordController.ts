@@ -36,7 +36,7 @@ export const postPsswd = async (req:Request, res:Response) => {
     try {
         const bodyValue = req.body;
         const response = await service.postPsswdService(bodyValue);
-        if(response) res.status(StatusCodes.OK).json(response);
+        if(response) res.status(StatusCodes.CREATED).json(response);
         else res.status(StatusCodes.BAD_REQUEST).send();
     } catch (error) {
         console.error(chalk.red(error));
