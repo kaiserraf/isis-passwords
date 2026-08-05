@@ -1,6 +1,6 @@
 # Sprint 01 - Funcionalidades Básicas | BACKEND
 Data Inicial: 25/07/2026 \
-Data Final: 07/05/2026
+Data Final: 07/05/2026 \
 Total: 8 Dias Uteis
 
 ## Introdução
