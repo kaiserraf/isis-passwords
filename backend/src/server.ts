@@ -7,6 +7,10 @@ const app = express();
 app.use(express.json());
 app.use('/', router);
 
+app.use('/', (_req, res) => {
+    res.redirect('/html/login.html');
+});
+
 app.listen(PORT, () => {
-    console.log(`running in https://localhost:${PORT}/`);
+    console.log(`running in http://localhost:${PORT}/`);
 });

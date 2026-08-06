@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar acesso - isis-passwords</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <form action="#">
+            <h2>Criar acesso</h2>
+            <p class="form-error" id="formError"></p>
+            <p class="form-error" id="formSuccess" style="color:#8fdf8f"></p>
+            <div class="input-field">
+                <input type="text" required>
+                <label>Nome</label>
+            </div>
+            <div class="input-field">
+                <input type="email" required>
+                <label>E-mail</label>
+            </div>
+            <div class="input-field">
+                <input type="password" required>
+                <label>Senha</label>
+            </div>
+            <button type="submit">Criar</button>
+            <div class="register">
+                <p><a href="dashboard.html">&larr; Voltar pro dashboard</a></p>
+            </div>
+        </form>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/register.js"></script>
+</body>
+</html>

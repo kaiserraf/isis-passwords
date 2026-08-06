@@ -1,0 +1,324 @@
+* {
+    border: 0px; /* Remove todas as bordas de todos os elementos */
+    padding: 0px; /* Remove o preenchimento de todos os elementos */
+    box-sizing: border-box; /* Define o modelo de caixa para incluir padding e bordas na largura e altura total do elemento */
+    font-family: sans-serif; /* Define a fonte padrão como sans-serif para todos os elementos */
+}
+
+body {
+    width: 100%; /* Define a largura do corpo como 100% da largura da janela */
+    display: flex; /* Usa o modelo de layout flexível para o corpo */
+    align-items: center; /* Alinha os itens verticalmente ao centro */
+    justify-content: center; /* Alinha os itens horizontalmente ao centro */
+    min-height: 100vh; /* Define a altura mínima do corpo como 100% da altura da janela */
+    padding: 0 10px; /* Preenchimento horizontal de 10px (unidade adicionada — "10" sozinho é inválido em CSS) */
+    color: white; /* Define a cor do texto como branco */
+    position: relative; /* Necessário para o ::before absoluto ficar contido no body, não na página inteira */
+}
+
+/*
+  IMPORTANTE SOBRE CAMINHOS DE IMAGEM:
+  Caminhos em url() dentro do CSS são resolvidos a partir da LOCALIZAÇÃO DESTE ARQUIVO
+  (frontend/css/style.css), não a partir do HTML que o importa e não a partir do disco (C:\...).
+  Como este arquivo está em frontend/css/ e a imagem está em frontend/img/,
+  o caminho correto é "../img/nome-do-arquivo.jpeg" (sobe uma pasta, entra em img/).
+  Nunca use caminho absoluto do Windows (C:\Users\...) — o navegador não tem acesso
+  ao seu disco fora da pasta do projeto, e além disso "\" não é um separador válido em URL.
+*/
+body::before {
+    content: ""; /* Cria um pseudo-elemento antes do corpo */
+    position: absolute; /* Posiciona o pseudo-elemento de forma absoluta em relação ao body (por isso o body precisa de position: relative) */
+    top: 0;
+    left: 0;
+    width: 100%; /* Define a largura do pseudo-elemento como 100% */
+    height: 100%; /* Define a altura do pseudo-elemento como 100% */
+    background-image: url('../img/nois-no-banheiro.jpeg'); /* Caminho relativo: sobe de css/ para frontend/, desce para img/ */
+    background-position: center; /* Centraliza a imagem de fundo */
+    background-size: cover; /* Faz com que a imagem de fundo cubra todo o espaço disponível */
+    z-index: -1; /* Coloca o pseudo-elemento atrás de outros elementos */
+}
+
+.wrapper {
+    width: 490px; /* Define a largura do contêiner como 490 pixels */
+    border-radius: 8px; /* Arredonda os cantos do contêiner em 8 pixels */
+    padding: 30px; /* Adiciona 30 pixels de preenchimento interno ao contêiner */
+    text-align: center; /* Centraliza o texto dentro do contêiner */
+    border: 1px solid #ffffff80; /* Adiciona uma borda semitransparente branca ao contêiner */
+    backdrop-filter: blur(8px); /* Aplica um desfoque ao fundo do contêiner (efeito "liquid glass") */
+    background: rgba(255, 255, 255, 0.05); /* Leve véu claro para o blur ter algo pra "borrar" e o texto branco continuar legível */
+}
+
+form {
+    display: flex; /* Usa o modelo de layout flexível para o formulário */
+    flex-direction: column; /* Organiza os itens do formulário em uma coluna */
+}
+
+h2 {
+    font-size: 2.5rem; /* Define o tamanho da fonte do título como 2.5 rem */
+    margin-bottom: 20px; /* Adiciona uma margem inferior de 20 pixels ao título */
+    color: #fff; /* Define a cor do título como branco */
+}
+
+.input-field {
+    position: relative; /* Define a posição relativa para o campo de entrada */
+    border-bottom: 2px solid #ccc; /* Adiciona uma borda inferior de 2 pixels de cor cinza ao campo de entrada */
+    margin: 15px 0; /* Adiciona uma margem vertical de 15 pixels ao campo de entrada */
+}
+
+.input-field label {
+    position: absolute; /* Posiciona o rótulo de forma absoluta em relação ao campo de entrada */
+    color: #fff; /* Define a cor do rótulo como branco */
+    top: 50%; /* Posiciona o rótulo verticalmente no meio do campo de entrada */
+    left: 0%; /* Posiciona o rótulo no início do campo de entrada */
+    transform: translateY(-50%); /* Centraliza verticalmente o rótulo */
+    font-size: 16px; /* Define o tamanho da fonte do rótulo como 16 pixels */
+    pointer-events: none; /* Desativa a interação do mouse com o rótulo */
+    transition: 0.15s ease; /* Adiciona uma transição suave ao rótulo */
+}
+
+.input-field input {
+    width: 100%; /* Define a largura do campo de entrada como 100% */
+    height: 40px; /* Define a altura do campo de entrada como 40 pixels */
+    color: #fff; /* Define a cor do texto do campo de entrada como branco */
+    background: transparent; /* Define o fundo do campo de entrada como transparente */
+    border: none; /* Remove a borda do campo de entrada */
+    outline: none; /* Remove o contorno padrão do campo de entrada ao focar */
+    font-size: 16px; /* Define o tamanho da fonte do texto do campo de entrada como 16 pixels */
+}
+
+.input-field input:focus~label,
+.input-field input:valid~label {
+    font-size: 0.8rem; /* Reduz o tamanho da fonte do rótulo para 0.8 rem quando o campo de entrada está focado ou válido */
+    top: 10px; /* Move o rótulo para 10 pixels do topo do campo de entrada */
+    transform: translateY(-120%); /* Move o rótulo para cima, fora do campo de entrada */
+}
+
+.forget {
+    display: flex; /* Usa o modelo de layout flexível para o contêiner de esquecimento */
+    align-items: center; /* Alinha os itens verticalmente ao centro */
+    justify-content: space-between; /* Distribui o espaço entre os itens, colocando-os nas extremidades */
+    margin: 25px 0 35px 0; /* Adiciona margens verticais ao contêiner de esquecimento */
+    color: #fff; /* Define a cor do texto como branco */
+}
+
+#remember {
+    accent-color: #fff; /* Define a cor de destaque do controle de entrada (como uma caixa de seleção) como branco */
+}
+
+.forget label {
+    display: flex; /* Usa o modelo de layout flexível para o rótulo dentro do contêiner de esquecimento */
+    align-items: center; /* Alinha os itens verticalmente ao centro */
+}
+
+.wrapper a {
+    color: #efefef; /* Define a cor do link como um cinza claro */
+    text-decoration: underline; /* Adiciona um sublinhado ao link */
+}
+
+button {
+    background: #fff; /* Define o fundo do botão como branco */
+    color: #000; /* Define a cor do texto do botão como preto */
+    font-weight: 600; /* Define o peso da fonte do botão como 600 (negrito) */
+    padding: 12px 20px; /* Adiciona preenchimento interno de 12 pixels verticalmente e 20 pixels horizontalmente ao botão */
+    cursor: pointer; /* Muda o cursor para uma mão ao passar sobre o botão */
+    border-radius: 3px; /* Arredonda os cantos do botão em 3 pixels */
+    font-size: 16px; /* Define o tamanho da fonte do botão como 16 pixels */
+    border: 2px solid transparent; /* Define uma borda de 2 pixels transparente ao redor do botão */
+    transition: 0.3s ease; /* Adiciona uma transição suave para as mudanças de estilo do botão */
+    width: 100%; /* Ocupa a largura toda do form, alinhado com os inputs */
+}
+
+button:hover {
+    background: transparent; /* No hover, fundo transparente */
+    color: #fff; /* Texto branco */
+    border: 2px solid #fff; /* Borda branca visível já que o fundo sumiu */
+}
+
+.register {
+    text-align: center; /* Centraliza o texto dentro do contêiner de registro */
+    margin-top: 30px; /* Adiciona uma margem superior de 30 pixels ao contêiner de registro */
+    color: #fff; /* Define a cor do texto como branco */
+}
+
+/* ===== Mensagem de erro de formulário (login/register) ===== */
+.form-error {
+    color: #ff8080; /* Vermelho claro, legível sobre o fundo escuro */
+    font-size: 0.9rem;
+    margin-top: -5px;
+    margin-bottom: 10px;
+    min-height: 1.2em; /* Reserva espaço mesmo vazio, pra não "pular" o layout quando o erro aparece */
+    display: none; /* Escondida por padrão, o JS mostra com display: block quando há erro */
+}
+
+/* ===== Dashboard: layout geral ===== */
+.dashboard {
+    width: 100%;
+    max-width: 700px; /* Mais largo que o .wrapper de login, pra caber a lista */
+}
+
+.dashboard-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    color: #fff;
+}
+
+.dashboard-nav .nav-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.dashboard-nav button,
+.dashboard-nav a.button-link {
+    width: auto; /* Sobrescreve o width: 100% do botão padrão de login, aqui os botões ficam lado a lado */
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* ===== Lista de senhas ===== */
+.password-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.password-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ffffff40;
+    border-radius: 8px;
+    padding: 14px 18px;
+    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+.password-card .info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.password-card .info .service {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.password-card .info .username {
+    font-size: 0.85rem;
+    color: #ddd;
+}
+
+.password-card .actions {
+    display: flex;
+    gap: 8px;
+}
+
+.password-card .actions button {
+    width: auto;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    background: transparent;
+    color: #fff;
+    border: 1px solid #ffffff80;
+}
+
+.password-card .actions button:hover {
+    background: #fff;
+    color: #000;
+}
+
+.fav-star {
+    cursor: pointer;
+    font-size: 1.2rem;
+    background: none;
+    border: none;
+    color: #ffd54f; /* Amarelo quando favoritado */
+}
+
+.fav-star.inactive {
+    color: #ffffff60; /* Cinza translúcido quando não favoritado */
+}
+
+.empty-state {
+    text-align: center;
+    color: #ddd;
+    padding: 30px;
+}
+
+/* ===== Modal (criar/editar/ver senha) ===== */
+.modal-overlay {
+    position: fixed;
+    inset: 0; /* Atalho pra top/right/bottom/left: 0 — cobre a tela toda */
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+.modal {
+    width: 420px;
+    max-width: 90vw;
+    border-radius: 8px;
+    padding: 30px;
+    border: 1px solid #ffffff80;
+    backdrop-filter: blur(12px);
+    background: rgba(20, 20, 20, 0.6); /* Fundo um pouco mais opaco que o wrapper, pro modal se destacar por cima da lista */
+    color: #fff;
+}
+
+.modal h3 {
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.modal-actions button {
+    width: 100%;
+}
+
+.modal-actions .secondary {
+    background: transparent;
+    color: #fff;
+    border: 2px solid #ffffff80;
+}
+
+.modal-actions .secondary:hover {
+    background: #fff;
+    color: #000;
+}
+
+.revealed-password {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    padding: 10px 14px;
+    margin-bottom: 15px;
+    font-family: monospace;
+    font-size: 1rem;
+    word-break: break-all;
+}
+
+.revealed-password button {
+    width: auto;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}

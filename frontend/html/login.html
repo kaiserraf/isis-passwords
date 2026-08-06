@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar - Site exclusivo</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <form action="#">
+            <h2>Bem-Vinda Meu Amor</h2>
+            <p class="form-error" id="formError"></p>
+            <div class="input-field">
+                <input type="email" required>
+                <label>E-mail</label>
+            </div>
+            <div class="input-field">
+                <input type="password" required>
+                <label>Senha</label>
+            </div>
+            <div class="forget">
+                <label for="remember">
+                    <input type="checkbox" id="remember">
+                    <p>lembrar cadastro</p>
+                </label>
+                <a href="#">Esqueci a senha</a>
+            </div>
+            <button type="submit">Login</button>
+            <!--
+                Novo acesso só pode ser criado por quem já está logado (backend exige autenticação
+                na rota /register — ver README). Por isso não tem link de auto-cadastro aqui;
+                a tela de registro fica disponível dentro do dashboard, depois do login.
+            -->
+        </form>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/login.js"></script>
+</body>
+</html>

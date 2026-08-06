@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas senhas - isis-passwords</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="dashboard">
+        <div class="dashboard-nav">
+            <h2 style="font-size:1.8rem">Minhas senhas</h2>
+            <div class="nav-actions">
+                <button id="newPasswordBtn">+ Nova senha</button>
+                <a class="button-link" href="register.html" style="border:1px solid #ffffff80;border-radius:3px;padding:8px 16px;color:#fff">Criar acesso</a>
+                <button id="logoutBtn">Sair</button>
+            </div>
+        </div>
+
+        <div class="password-list" id="passwordList">
+            <p class="empty-state">Carregando...</p>
+        </div>
+    </div>
+
+    <div class="modal-overlay hidden" id="modalOverlay">
+        <div class="modal">
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>

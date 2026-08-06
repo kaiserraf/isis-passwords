@@ -12,7 +12,7 @@ declare global{
 
 export const authToken = async (req:Request, res:Response, next:NextFunction) => {
     const authHeader = req.header('authorization');
-    const token = authHeader?.split('')[1];
+    const token = authHeader?.split(' ')[1];
 
     const secret = process.env.JWT_SECRET;
     if(!secret) throw new Error('JWT_SECRET não definido nas variáveis ambiente');
