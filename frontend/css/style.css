@@ -39,7 +39,7 @@ body::before {
 }
 
 .wrapper {
-    width: 490px; /* Define a largura do contêiner como 490 pixels */
+    width: 490px; /* Define a largura do contêiner como 490 pixels (desktop) */
     border-radius: 8px; /* Arredonda os cantos do contêiner em 8 pixels */
     padding: 30px; /* Adiciona 30 pixels de preenchimento interno ao contêiner */
     text-align: center; /* Centraliza o texto dentro do contêiner */
@@ -83,7 +83,7 @@ h2 {
     background: transparent; /* Define o fundo do campo de entrada como transparente */
     border: none; /* Remove a borda do campo de entrada */
     outline: none; /* Remove o contorno padrão do campo de entrada ao focar */
-    font-size: 16px; /* Define o tamanho da fonte do texto do campo de entrada como 16 pixels */
+    font-size: 16px; /* 16px (não menos) evita que o iOS Safari dê zoom automático ao focar o input */
 }
 
 .input-field input:focus~label,
@@ -99,15 +99,20 @@ h2 {
     justify-content: space-between; /* Distribui o espaço entre os itens, colocando-os nas extremidades */
     margin: 25px 0 35px 0; /* Adiciona margens verticais ao contêiner de esquecimento */
     color: #fff; /* Define a cor do texto como branco */
+    gap: 10px; /* Espaço mínimo entre "lembrar" e "esqueci a senha" quando o texto quebrar linha no mobile */
+    flex-wrap: wrap; /* Permite os dois itens quebrarem linha em telas bem estreitas, em vez de espremer */
 }
 
 #remember {
     accent-color: #fff; /* Define a cor de destaque do controle de entrada (como uma caixa de seleção) como branco */
+    width: 16px; /* O reset "* { padding: 0 }" não afeta width, mas garantimos um tamanho de toque razoável */
+    height: 16px;
 }
 
 .forget label {
     display: flex; /* Usa o modelo de layout flexível para o rótulo dentro do contêiner de esquecimento */
     align-items: center; /* Alinha os itens verticalmente ao centro */
+    gap: 6px; /* Espaço entre o checkbox e o texto "lembrar cadastro" */
 }
 
 .wrapper a {
@@ -126,6 +131,7 @@ button {
     border: 2px solid transparent; /* Define uma borda de 2 pixels transparente ao redor do botão */
     transition: 0.3s ease; /* Adiciona uma transição suave para as mudanças de estilo do botão */
     width: 100%; /* Ocupa a largura toda do form, alinhado com os inputs */
+    min-height: 44px; /* Alvo de toque mínimo recomendado pra mobile (Apple/Google ~44px) */
 }
 
 button:hover {
@@ -150,175 +156,44 @@ button:hover {
     display: none; /* Escondida por padrão, o JS mostra com display: block quando há erro */
 }
 
-/* ===== Dashboard: layout geral ===== */
-.dashboard {
-    width: 100%;
-    max-width: 700px; /* Mais largo que o .wrapper de login, pra caber a lista */
+/*
+  ===== Responsivo (login/register) =====
+  Mobile-first não foi usado aqui de propósito: o CSS acima já é o "padrão desktop"
+  original do projeto, então só sobrescrevemos o necessário pra telas pequenas,
+  em vez de reescrever tudo do zero.
+*/
+
+/* Tablets e celulares grandes */
+@media (max-width: 600px) {
+    .wrapper {
+        width: 100%; /* Antes era 490px fixo — em telas menores que isso, ultrapassava a tela */
+        max-width: 440px; /* Ainda limita em telas grandes, só não trava em telas pequenas */
+        padding: 24px;
+    }
+
+    h2 {
+        font-size: 2rem; /* 2.5rem ficava grande/quebrava linha feio em telas estreitas */
+    }
 }
 
-.dashboard-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 25px;
-    color: #fff;
-}
+/* Celulares pequenos */
+@media (max-width: 400px) {
+    body {
+        padding: 0 6px; /* Menos espaço nas laterais pra sobrar mais área útil */
+    }
 
-.dashboard-nav .nav-actions {
-    display: flex;
-    gap: 10px;
-}
+    .wrapper {
+        padding: 18px;
+        border-radius: 6px;
+    }
 
-.dashboard-nav button,
-.dashboard-nav a.button-link {
-    width: auto; /* Sobrescreve o width: 100% do botão padrão de login, aqui os botões ficam lado a lado */
-    padding: 8px 16px;
-    font-size: 0.9rem;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-}
+    h2 {
+        font-size: 1.6rem;
+    }
 
-/* ===== Lista de senhas ===== */
-.password-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.password-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid #ffffff40;
-    border-radius: 8px;
-    padding: 14px 18px;
-    backdrop-filter: blur(8px);
-    background: rgba(255, 255, 255, 0.05);
-    color: #fff;
-}
-
-.password-card .info {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-}
-
-.password-card .info .service {
-    font-weight: 600;
-    font-size: 1.1rem;
-}
-
-.password-card .info .username {
-    font-size: 0.85rem;
-    color: #ddd;
-}
-
-.password-card .actions {
-    display: flex;
-    gap: 8px;
-}
-
-.password-card .actions button {
-    width: auto;
-    padding: 6px 10px;
-    font-size: 0.85rem;
-    background: transparent;
-    color: #fff;
-    border: 1px solid #ffffff80;
-}
-
-.password-card .actions button:hover {
-    background: #fff;
-    color: #000;
-}
-
-.fav-star {
-    cursor: pointer;
-    font-size: 1.2rem;
-    background: none;
-    border: none;
-    color: #ffd54f; /* Amarelo quando favoritado */
-}
-
-.fav-star.inactive {
-    color: #ffffff60; /* Cinza translúcido quando não favoritado */
-}
-
-.empty-state {
-    text-align: center;
-    color: #ddd;
-    padding: 30px;
-}
-
-/* ===== Modal (criar/editar/ver senha) ===== */
-.modal-overlay {
-    position: fixed;
-    inset: 0; /* Atalho pra top/right/bottom/left: 0 — cobre a tela toda */
-    background: rgba(0, 0, 0, 0.55);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-}
-
-.modal-overlay.hidden {
-    display: none;
-}
-
-.modal {
-    width: 420px;
-    max-width: 90vw;
-    border-radius: 8px;
-    padding: 30px;
-    border: 1px solid #ffffff80;
-    backdrop-filter: blur(12px);
-    background: rgba(20, 20, 20, 0.6); /* Fundo um pouco mais opaco que o wrapper, pro modal se destacar por cima da lista */
-    color: #fff;
-}
-
-.modal h3 {
-    margin-bottom: 20px;
-    font-size: 1.4rem;
-}
-
-.modal-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.modal-actions button {
-    width: 100%;
-}
-
-.modal-actions .secondary {
-    background: transparent;
-    color: #fff;
-    border: 2px solid #ffffff80;
-}
-
-.modal-actions .secondary:hover {
-    background: #fff;
-    color: #000;
-}
-
-.revealed-password {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 4px;
-    padding: 10px 14px;
-    margin-bottom: 15px;
-    font-family: monospace;
-    font-size: 1rem;
-    word-break: break-all;
-}
-
-.revealed-password button {
-    width: auto;
-    padding: 6px 10px;
-    font-size: 0.8rem;
-    flex-shrink: 0;
+    .forget {
+        flex-direction: column; /* Empilha "lembrar" e "esqueci a senha" em vez de espremer lado a lado */
+        align-items: flex-start;
+        gap: 12px;
+    }
 }

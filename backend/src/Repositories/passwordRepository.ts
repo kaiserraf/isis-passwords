@@ -43,23 +43,23 @@ export const updatePsswd = async (id:number, password:Partial<{
     const value: unknown[] = [];
     let count = 1;
 
-    if(!password.passwordEncrypted){
+    if(password.passwordEncrypted){
         field.push(`passwordencrypted = $${count++}`);
         value.push(password.passwordEncrypted);
     }
-    if(!password.service){
+    if(password.service){
         field.push(`service = $${count++}`);
         value.push(password.service);
     }
-    if(!password.username){
+    if(password.username){
         field.push(`username = $${count++}`);
         value.push(password.username);
     }
-    if(!password.updatedAt){
+    if(password.updatedAt){
         field.push(`updatedat = $${count++}`);
         value.push(password.updatedAt);
     }
-    if(!password.fav){
+    if(password.fav){
         field.push(`fav = $${count++}`);
         value.push(password.fav);
     }
@@ -73,8 +73,8 @@ export const updatePsswd = async (id:number, password:Partial<{
         username,
         fav,
         createdat AS "createdAt",
-        updatedat AS "updatedAt"
-    `);
+        updatedat AS "updatedAt"`, value
+    );
 
     return result.rows[0] ?? null;
 };
