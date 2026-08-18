@@ -76,3 +76,19 @@ export const deletePsswd = async (req:Request, res:Response) => {
         });
     }
 };
+
+export const updateFav = async (req:Request, res:Response) => {
+    try {
+        const id = parseInt(req.params.id as string);
+        const bodyValue = req.body;
+        if(isNaN(id)) return res.status(StatusCodes.BAD_REQUEST).json({message: "Id invalido"});
+        const response = await service.updateFavService(id, bodyValue);
+        if(response) return res.status(StatusCodes.OK).json(response);
+        else res.status(StatusCodes.BAD_REQUEST).send();
+    } catch (error) {
+        console.error(chalk.red(error));
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            message: ReasonPhrases.INTERNAL_SERVER_ERROR
+        });
+    }
+}

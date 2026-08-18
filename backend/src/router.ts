@@ -10,6 +10,7 @@ router.get('/password/:id', authToken, psswdController.getPsswdById); // get pas
 router.post('/password/register', authToken, psswdController.postPsswd); // post password
 router.patch('/password/:id', authToken, psswdController.patchPsswd); // update password
 router.delete('/password/:id', authToken, psswdController.deletePsswd); // delete password by id
+router.patch('/password/favorite/:id', authToken, psswdController.updateFav); // somente favoritar senha
 
 
 router.post('/login', userController.login); // login

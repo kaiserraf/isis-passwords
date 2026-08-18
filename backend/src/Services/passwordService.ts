@@ -12,7 +12,7 @@ export const getAllPsswdService = async () => {
 export const getPsswdByIdService = async (id:number) => {
     const data = await pr.selectPsswdById(id);
     if(!data) return null;
-    if(!data.passwordEncrypted) throw new Error("Registro corrompido"); // para aqui (mensagem de Registro corrompido)
+    if(!data.passwordEncrypted) throw new Error("Registro corrompido");
     data.passwordEncrypted = await crypto.decrypt(data?.passwordEncrypted);
     return data;
 };
@@ -40,3 +40,9 @@ export const deletePsswdService = async (id:number) => {
     if(!data) return null;
     return data;
 };
+
+export const updateFavService = async (id:number, fav:boolean) => {
+    const data = await pr.updateFav(id, fav);
+    if(!data) return null;
+    return data;
+}

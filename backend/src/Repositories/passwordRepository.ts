@@ -86,3 +86,9 @@ export const deletePsswd = async (id:number):Promise<PasswordModel | null> => {
     return result.rows[0] ?? null;
 };
 
+export const updateFav = async (id:number, fav:boolean) => {
+    const result = await pool.query<PasswordModel>(
+        `UPDATE passwords SET fav = $1 WHERE id = $2`, [fav, id]
+    );
+    return result.rows[0] ?? null;
+}
